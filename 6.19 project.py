@@ -33,6 +33,7 @@ def main(target_ip, start_port, end_port):
                 if tcp_layer.flags == OPEN_PORT:
                     logger.info(f"[+] Port {port} is OPEN")
                     open_ports.append(port)
+                    print("port "+ str(port) +" is open")
                 elif tcp_layer.flags == CLOSE_PORT:
                     logger.debug(f"Port {port}: Closed")
         except Exception as e:
@@ -40,16 +41,19 @@ def main(target_ip, start_port, end_port):
     logger.info("--- Scan Results ---")
     if open_ports:
         logger.info(f"Open ports found: {open_ports}")
+        print("all the open ports are: ", open_ports)
     else:
         logger.info("No open ports found in the specified range.")
+        print("No open ports found opened in the specified range.")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s'
-    )
-    logger = logging.getLogger(__name__)
+    logging.basicConfig(filename="6.19 project .log",
+                        format='%(asctime)s %(message)s',
+                        filemode='w')
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
     try:
         assert is_valid_ip(TARGET), f"Invalid IP address: {TARGET}"
         assert 0 <= PORT_START <= 65535 and 0 <= PORT_END <= 65535, "Ports must be between 0-65535"
