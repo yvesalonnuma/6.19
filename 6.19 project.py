@@ -21,6 +21,7 @@ def is_valid_ip(ip):
 
 def main(target_ip, start_port, end_port):
     logger.info(f"Starting scan on {target_ip} (Range: {start_port}-{end_port})")
+    print("Starting scan on ", target_ip+ " through ", str(start_port)+ " through ", str(end_port)+" the opened ports...")
     open_ports = []
     for port in range(start_port, end_port + 1):
         try:
@@ -36,8 +37,8 @@ def main(target_ip, start_port, end_port):
                     print("port "+ str(port) +" is open")
                 elif tcp_layer.flags == CLOSE_PORT:
                     logger.debug(f"Port {port}: Closed")
-        except Exception as e:
-            logger.error(f"Error scanning port {port}: {e}")
+        except Exception as error:
+            logger.error(f"Error scanning port {port}: {error}")
     logger.info("--- Scan Results ---")
     if open_ports:
         logger.info(f"Open ports found: {open_ports}")
